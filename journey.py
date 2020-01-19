@@ -1,62 +1,90 @@
 #! python3
-
 #journey.py is a text-based adventure game
-#set in 1947 Los Angeles, you are a detective hired by an ingenue scientist to investigate
-#whether or not her husband is having an affair.
-#along the way, you will encounter nazi scientists, soviet spies, and maybe an
-#alien or two as your investigation takes you from Tinsel Town to a secret
-#government installation in the New Mexico desert known as the Indigo Zone.
-#it will take all your wits to survive... so choose your adventure carefully!
+import random
+import time
+from pprint import pprint
 
-name = input("What is your name, detective?\n")
+class Player(object):
+    def __init__(self, Pname, Phealth, Pattack, Pdefense, Pranged, Pmagic):
+        self.name = Pname
+        self.health = Phealth
+        self.attack = Pattack
+        self.defense = Pdefense
+        self.ranged = Pranged
+        self.magic = Pmagic
 
-'''def choice(options):
-    print("Press ")
-    for option in options:
-        print(option)
-    decision = input()
+    def getName(self):
+        return self.name
+    def getHealth(self):
+        return self.health
+    def getAttack(self):
+        return self.attack
+    def getDefense(self):
+        return self.defense
+    def getRanged(self):
+        return self.ranged
+    def getMagic(self):
+        return self.magic
 
-def decision(options, decision):
-    print(f"options are {options}.")
-    print(f"decision is {decision}.")
-    if decision in options:
-        print(f"{decision} is a success!")
-'''
+    def setName(self, newName):
+        self.name = newName
+    def setHealth(self, newHealth):
+        self.health = newHealth
+    def setAttack(self, newAttack):
+        self.attack = newAttack
+    def setDefense(self, newDefense):
+        self.defense = newDefense
+    def setRanged(self, newRanged):
+        self.ranged = newRanged
+    def setMagic(self, newMagic):
+        self.magic = newMagic
 
-class Branch():
-
-    def __init__(self, options):
-        self.options = options
-        #self.decision = ""
-
-    def choice(self, options):
-        print("Press ")
-        for option in self.options:
-            print(option)
-    #    self.decision = input()
-        return None
-
-    #def decision(self):
-    #    if self.decision in self.options:
-    #        return print(f"{decision} is a success!")
+    def pickup(self, input, item):
+        if input == 'Y':
+            self.inventory.append(item)
+            return self.inventory
+        elif input == 'N':
+            return "All right. Let's get going."
 
 
+def createClass():
+    a = input("Are you more strategic(1) of more of a warrior(2)?...")
+    while a != "1" and a != "2":
+        print("invalid selection")
+        a = input("Are you more strategic(1) of more of a warrior(2)?...")
 
-print(f"Los Angeles, 1947.\n Ever since returning from the war, you've \
-kept a small office off of Wilshire Boulevard in the heart of Beverly Hills.\n\
-Your specialty is suspicious spouses and snooping employers who \
-suspect that their employees are secretly commies. It's not the most noble \
-profession, but it's a living. \n\n \
-So it's in your office, with the name Detective {name} written on the door, when \
-you first come into contact with Mrs. Squires...")
+    if a == "1":
+        Pattack = 50
+        Pdefense = 100
+    elif a == "2":
+        Pattack = 100
+        Pdefense = 50
 
-print("A knock at the door. Will you answer it?")
-options = ["Y", "N"]
-Branch(options)
-print(Branch.choice(options))
-Branch.decision(self, options)
+    b = input("Press enter to roll a dice.")
+    time.sleep(0.2)
+    print("Rolling dice...")
+    playerLuck = random.randint(0,10)
+    print(f"Your hero has {playerLuck} luck out of 10.")
 
-'''options = ["1", "2"]
-print(f"Press {options[0]} to go in, {options[1]} to go back.")
-choice(options)
-decision(options, decision)'''
+    c = input("Bow and arrow(1) or magic(2)?")
+    while c != "1" and c != "2":
+        print("invalid selection")
+        c = input("Bow and arrow(1) or magic(2)?")
+
+    if c == "1":
+        Pranged = 100
+        Pmagic = 50
+    elif c == "2":
+        Pranged = 50
+        Pmagic = 100
+
+    Pname = input("What is your name hero?")
+    print(f"Welcome {Pname}!!!")
+
+    return (Pname, Pattack, Pdefense, Pranged, Pmagic)
+
+class_data = createClass()
+
+character = Player(100, class_data[0], class_data[1], class_data[2], class_data[3], class_data[4])
+
+pprint(vars(character))
